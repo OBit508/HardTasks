@@ -15,6 +15,7 @@ namespace HardTasks.Skeld
         public static float timer;
         public static AnimationClip[] active;
         public static AnimationClip[] inactive;
+        public static Sprite sprite = Utils.LoadSprite("HardTasks.Resources.LeafButton", 200);
         [HarmonyPatch("Begin")]
         [HarmonyPostfix]
         public static void BeginPostfix(LeafMinigame __instance)
@@ -30,13 +31,14 @@ namespace HardTasks.Skeld
             inactive = __instance.Inactive;
             ButtonBehavior button = GameObject.Instantiate<ButtonBehavior>(__instance.transform.GetChild(1).GetComponent<ButtonBehavior>(), __instance.transform);
             button.transform.localScale = new Vector3(0.8f, 0.8f, 0.8f);
-            button.transform.localPosition = new Vector3(-1.95f, 1.84f, -5);
+            button.transform.localPosition = new Vector3(-1.985f, 1.84f, -5);
+            button.spriteRenderer.sprite = sprite;
             button.OnClick = new UnityEngine.UI.Button.ButtonClickedEvent();
             button.OnClick.AddListener(new Action(delegate
             {
                 if (timer <= 0)
                 {
-                    timer = 1;
+                    timer = 1.2f;
                     __instance.Arrows[0].Play(active[0]);
                     __instance.Arrows[1].Play(active[1]);
                 }
