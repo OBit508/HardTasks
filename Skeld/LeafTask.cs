@@ -16,9 +16,11 @@ namespace HardTasks.Skeld
         public static AnimationClip[] active;
         public static AnimationClip[] inactive;
         [HarmonyPatch("Begin")]
-        [HarmonyPrefix]
-        public static void BeginPrefix(LeafMinigame __instance)
+        [HarmonyPostfix]
+        public static void BeginPostfix(LeafMinigame __instance)
         {
+            __instance.MyNormTask.MaxStep = 16;
+            timer = 0;
             Collider = new GameObject("Collider").AddComponent<BoxCollider2D>();
             Collider.gameObject.layer = __instance.transform.GetChild(2).gameObject.layer;
             Collider.transform.SetParent(__instance.transform);
@@ -39,7 +41,12 @@ namespace HardTasks.Skeld
                     __instance.Arrows[1].Play(active[1]);
                 }
             }));
-            for (int i = 0; i < 10; i++)
+            foreach (Collider2D leaf in __instance.Leaves)
+            {
+                GameObject.Destroy(leaf.gameObject);
+            }
+            __instance.Leaves = new Collider2D[] { };
+            for (int i = 0; i < 16 - __instance.MyNormTask.TaskStep; i++)
             {
                 LeafBehaviour leafBehaviour = GameObject.Instantiate<LeafBehaviour>(__instance.LeafPrefab);
                 leafBehaviour.transform.SetParent(__instance.transform);

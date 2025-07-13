@@ -13,14 +13,14 @@ namespace ImpossibleTasksV3.Skeld
     {
         [HarmonyPatch("Begin")]
         [HarmonyPostfix]
-        public static void OnBegin(UploadDataGame __instance)
+        public static void BeginPostfix(UploadDataGame __instance)
         {
             __instance.gameObject.AddComponent<CustomUploadTask>().Game = __instance;
             __instance.transform.GetChild(8).gameObject.SetActive(false);
         }
         [HarmonyPatch("Click")]
         [HarmonyPrefix]
-        public static bool StartUpload(UploadDataGame __instance)
+        public static bool ClickPrefix(UploadDataGame __instance)
         {
             __instance.StartCoroutine(__instance.DoRun());
             __instance.Status.gameObject.SetActive(true);
