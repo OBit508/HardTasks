@@ -1,0 +1,95 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <ProjectGuid>{F8682408-96CA-4497-81EA-363D6F55E254}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <RootNamespace>HardTasks</RootNamespace>
+    <AssemblyName>HardTasks</AssemblyName>
+    <GenerateAssemblyInfo>False</GenerateAssemblyInfo>
+    <FileAlignment>512</FileAlignment>
+    <TargetFramework>net6.0</TargetFramework>
+  </PropertyGroup>
+  <PropertyGroup>
+    <EnableDefaultItems>False</EnableDefaultItems>
+  </PropertyGroup>
+  <PropertyGroup />
+  <ItemGroup>
+    <Compile Include="BepInEx\BepInAutoPluginAttribute.cs" />
+    <Compile Include="BepInEx\Preloader\Core\Patching\PatcherAutoPluginAttribute.cs" />
+    <Compile Include="CustomTask\CustomUploadTask.cs" />
+    <Compile Include="HardTasksPlugin.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Skeld\CardTask.cs" />
+    <Compile Include="Skeld\CourseTask.cs" />
+    <Compile Include="Skeld\GarbageTask.cs" />
+    <Compile Include="Skeld\LeafTask.cs" />
+    <Compile Include="Skeld\SweepTask.cs" />
+    <Compile Include="Skeld\UploadTask.cs" />
+    <Compile Include="Skeld\VentTask.cs" />
+    <Compile Include="Skeld\WireTask.cs" />
+    <Compile Include="System\Runtime\CompilerServices\RefSafetyRulesAttribute.cs" />
+    <Compile Include="Utils.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\SweepTaskBackground.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="0Harmony">
+      <HintPath>..\ModTemplate\bin\Debug\net6.0\0Harmony.dll</HintPath>
+    </Reference>
+    <Reference Include="Assembly-CSharp">
+      <HintPath>..\ModTemplate\bin\Debug\net6.0\Assembly-CSharp.dll</HintPath>
+    </Reference>
+    <Reference Include="BepInEx.Core">
+      <HintPath>..\ModTemplate\bin\Debug\net6.0\BepInEx.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="BepInEx.Unity.IL2CPP">
+      <HintPath>..\ModTemplate\bin\Debug\net6.0\BepInEx.Unity.IL2CPP.dll</HintPath>
+    </Reference>
+    <Reference Include="Hazel">
+      <HintPath>..\ModTemplate\bin\Debug\net6.0\Hazel.dll</HintPath>
+    </Reference>
+    <Reference Include="Il2CppInterop.Runtime">
+      <HintPath>..\ModTemplate\bin\Debug\net6.0\Il2CppInterop.Runtime.dll</HintPath>
+    </Reference>
+    <Reference Include="Il2Cppmscorlib">
+      <HintPath>..\ModTemplate\bin\Debug\net6.0\Il2Cppmscorlib.dll</HintPath>
+    </Reference>
+    <Reference Include="Il2CppSystem">
+      <HintPath>..\ModTemplate\bin\Debug\net6.0\Il2CppSystem.dll</HintPath>
+    </Reference>
+    <Reference Include="Il2CppSystem.Core">
+      <HintPath>..\ModTemplate\bin\Debug\net6.0\Il2CppSystem.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Sentry">
+      <HintPath>..\ModTemplate\bin\Debug\net6.0\Sentry.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.TextMeshPro">
+      <HintPath>..\ModTemplate\bin\Debug\net6.0\Unity.TextMeshPro.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.AnimationModule">
+      <HintPath>..\ModTemplate\bin\Debug\net6.0\UnityEngine.AnimationModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.AssetBundleModule">
+      <HintPath>..\ModTemplate\bin\Debug\net6.0\UnityEngine.AssetBundleModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.AudioModule">
+      <HintPath>..\ModTemplate\bin\Debug\net6.0\UnityEngine.AudioModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.CoreModule">
+      <HintPath>..\ModTemplate\bin\Debug\net6.0\UnityEngine.CoreModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.ImageConversionModule">
+      <HintPath>..\ModTemplate\bin\Debug\net6.0\UnityEngine.ImageConversionModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.Physics2DModule">
+      <HintPath>..\ModTemplate\bin\Debug\net6.0\UnityEngine.Physics2DModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.UI">
+      <HintPath>..\ModTemplate\bin\Debug\net6.0\UnityEngine.UI.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.UIElementsModule">
+      <HintPath>..\ModTemplate\bin\Debug\net6.0\UnityEngine.UIElementsModule.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+</Project>
