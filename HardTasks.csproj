@@ -26,9 +26,13 @@
     <Compile Include="Skeld\SweepTask.cs" />
     <Compile Include="Skeld\UploadTask.cs" />
     <Compile Include="Skeld\VentTask.cs" />
+    <Compile Include="Skeld\WeaponsTask.cs" />
     <Compile Include="Skeld\WireTask.cs" />
     <Compile Include="System\Runtime\CompilerServices\RefSafetyRulesAttribute.cs" />
     <Compile Include="Utils.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\ReloadButton.png" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resources\LeafButton.png" />

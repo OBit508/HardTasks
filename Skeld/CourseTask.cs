@@ -63,7 +63,7 @@ namespace HardTasks.Skeld
         {
             timer = 0;
             Asteroids.Clear();
-            __instance.NumPoints = 15;
+            __instance.NumPoints = 10;
         }
         public static void Reset(CourseMinigame minigame)
         {

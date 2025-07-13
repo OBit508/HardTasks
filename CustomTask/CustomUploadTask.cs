@@ -62,7 +62,7 @@ namespace ImpossibleTasksV3.CustomTask
                     if (value >= 100)
                     {
                         Game.MyNormTask.NextStep();
-                        StartCoroutine(Game.CoStartClose());
+                        Game.StartCoroutine(Game.CoStartClose());
                         GameObject.Destroy(this);
                         return;
                     }
