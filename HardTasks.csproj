@@ -16,13 +16,17 @@
   <ItemGroup>
     <Compile Include="BepInEx\BepInAutoPluginAttribute.cs" />
     <Compile Include="BepInEx\Preloader\Core\Patching\PatcherAutoPluginAttribute.cs" />
+    <Compile Include="ChangeableValue.cs" />
     <Compile Include="CustomTask\CustomUploadTask.cs" />
     <Compile Include="HardTasksPlugin.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Skeld\CardTask.cs" />
     <Compile Include="Skeld\CourseTask.cs" />
+    <Compile Include="Skeld\DivertPowerTask.cs" />
     <Compile Include="Skeld\GarbageTask.cs" />
     <Compile Include="Skeld\LeafTask.cs" />
+    <Compile Include="Skeld\SampleTask.cs" />
+    <Compile Include="Skeld\ShieldTask.cs" />
     <Compile Include="Skeld\SimonSaysTask.cs" />
     <Compile Include="Skeld\SweepTask.cs" />
     <Compile Include="Skeld\ManifoldsTask.cs" />
