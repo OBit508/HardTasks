@@ -33,7 +33,9 @@ namespace HardTasks.Skeld
                     {
                         CanShot = true;
                     }
+                    __instance.ScoreText.text = TranslationController.Instance.GetString(StringNames.AstDestroyed).Replace("{0}", __instance.MyNormTask.TaskStep.ToString()) + "\nNeed to Reload: " + (!CanShot).ToString();
                 }));
+                __instance.ScoreText.text = TranslationController.Instance.GetString(StringNames.AstDestroyed).Replace("{0}", __instance.MyNormTask.TaskStep.ToString()) + "\nNeed to Reload: " + (!CanShot).ToString();
             }
             [HarmonyPatch("BreakApart")]
             [HarmonyPrefix]

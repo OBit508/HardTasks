@@ -23,13 +23,39 @@
     <Compile Include="Skeld\CourseTask.cs" />
     <Compile Include="Skeld\GarbageTask.cs" />
     <Compile Include="Skeld\LeafTask.cs" />
+    <Compile Include="Skeld\SimonSaysTask.cs" />
     <Compile Include="Skeld\SweepTask.cs" />
+    <Compile Include="Skeld\ManifoldsTask.cs" />
     <Compile Include="Skeld\UploadTask.cs" />
     <Compile Include="Skeld\VentTask.cs" />
     <Compile Include="Skeld\WeaponsTask.cs" />
     <Compile Include="Skeld\WireTask.cs" />
     <Compile Include="System\Runtime\CompilerServices\RefSafetyRulesAttribute.cs" />
     <Compile Include="Utils.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\Manifolds\8.png" />
+    <EmbeddedResource Include="Resources\Manifolds\9.png" />
+    <EmbeddedResource Include="Resources\Manifolds\10.png" />
+    <EmbeddedResource Include="Resources\Manifolds\0.png" />
+    <EmbeddedResource Include="Resources\Manifolds\1.png" />
+    <EmbeddedResource Include="Resources\Manifolds\2.png" />
+    <EmbeddedResource Include="Resources\Manifolds\3.png" />
+    <EmbeddedResource Include="Resources\Manifolds\4.png" />
+    <EmbeddedResource Include="Resources\Manifolds\6.png" />
+    <EmbeddedResource Include="Resources\Manifolds\7.png" />
+    <EmbeddedResource Include="Resources\Manifolds\5.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\SimonSays\7.png" />
+    <EmbeddedResource Include="Resources\SimonSays\1.png" />
+    <EmbeddedResource Include="Resources\SimonSays\5.png" />
+    <EmbeddedResource Include="Resources\SimonSays\3.png" />
+    <EmbeddedResource Include="Resources\SimonSays\8.png" />
+    <EmbeddedResource Include="Resources\SimonSays\6.png" />
+    <EmbeddedResource Include="Resources\SimonSays\4.png" />
+    <EmbeddedResource Include="Resources\SimonSays\2.png" />
+    <EmbeddedResource Include="Resources\SimonSays\0.png" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resources\ReloadButton.png" />
