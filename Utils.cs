@@ -1,7 +1,9 @@
-﻿using System;
+﻿using HardTasks.Skeld;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
@@ -32,6 +34,47 @@ namespace HardTasks
                 }
             }
             return null;
+        }
+        public static DivertPowerTask GetTaskByTarget(SystemTypes type)
+        {
+            foreach (PlayerTask task in PlayerControl.LocalPlayer.myTasks)
+            {
+                DivertPowerTask divertPowerTask = task.TryCast<DivertPowerTask>();
+                if (divertPowerTask != null && divertPowerTask.TargetSystem == type)
+                {
+                    return divertPowerTask;
+                }
+            }
+            return null;
+        }
+        public static bool IsDivertPowerTaskConsole(Console console)
+        {
+            foreach (TaskSet set in console.ValidTasks)
+            {
+                if (set.taskType == TaskTypes.DivertPower)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+        public static Console GetClosestDivertPowerConsole(Minigame minigame, SystemTypes type)
+        {
+            float dis = 10;
+            Console closest = null;
+            foreach ((Console console, ArrowBehaviour arrow) pair in DivertPower.tasks[type])
+            {
+                if (IsDivertPowerTaskConsole(pair.console))
+                {
+                    float currentDis = Vector2.Distance(pair.console.transform.position, PlayerControl.LocalPlayer.transform.position);
+                    if (dis > currentDis)
+                    {
+                        dis = currentDis;
+                        closest = pair.console;
+                    }
+                }
+            }
+            return closest;
         }
     }
 }

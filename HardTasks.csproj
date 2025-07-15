@@ -35,6 +35,7 @@
     <Compile Include="Skeld\WeaponsTask.cs" />
     <Compile Include="Skeld\WireTask.cs" />
     <Compile Include="System\Runtime\CompilerServices\RefSafetyRulesAttribute.cs" />
+    <Compile Include="TaskPanelPatch.cs" />
     <Compile Include="Utils.cs" />
   </ItemGroup>
   <ItemGroup>
