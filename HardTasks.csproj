@@ -19,6 +19,7 @@
     <Compile Include="ChangeableValue.cs" />
     <Compile Include="CustomTask\CustomUploadTask.cs" />
     <Compile Include="HardTasksPlugin.cs" />
+    <Compile Include="PingTrackerPatch.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Skeld\CardTask.cs" />
     <Compile Include="Skeld\CourseTask.cs" />
