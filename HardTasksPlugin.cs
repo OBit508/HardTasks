@@ -6,8 +6,9 @@ using UnityEngine;
 using HarmonyLib;
 using Hazel;
 using Il2CppInterop.Runtime.Injection;
-using ImpossibleTasksV3.CustomTask;
+using HardTasks.CustomTask;
 using InnerNet;
+
 
 namespace ImpossibleTasksV3
 {

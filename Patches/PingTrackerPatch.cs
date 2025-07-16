@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace HardTasks
+namespace HardTasks.Patches
 {
     [HarmonyPatch(typeof(PingTracker), "Update")]
     internal class PingTrackerPatch

@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
 
-namespace ImpossibleTasksV3.CustomTask
+namespace HardTasks.CustomTask
 {
     internal class CustomUploadTask : MonoBehaviour
     {

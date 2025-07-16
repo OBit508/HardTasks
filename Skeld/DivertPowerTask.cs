@@ -1,6 +1,7 @@
-﻿using HarmonyLib;
+﻿using HardTasks.CustomTask;
+using HarmonyLib;
+using Il2CppSystem.Collections.Generic;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -10,36 +11,66 @@ namespace HardTasks.Skeld
 {
     internal class DivertPower
     {
-        public static Dictionary<SystemTypes, List<(Console console, ArrowBehaviour arrow)>> tasks = new Dictionary<SystemTypes, List<(Console console, ArrowBehaviour arrow)>>();
+        public static Dictionary<Console, ArrowBehaviour> consoles = new Dictionary<Console, ArrowBehaviour>();
+        public static DivertPowerTask GetFirst()
+        {
+            foreach (PlayerTask task in PlayerControl.LocalPlayer.myTasks)
+            {
+                DivertPowerTask divertPowerTask = task.TryCast<DivertPowerTask>();
+                if (divertPowerTask != null)
+                {
+                    return divertPowerTask;
+                }
+            }
+            return null;
+        }
+        public static bool IsDivertPowerTaskConsole(Console console)
+        {
+            foreach (TaskSet set in console.ValidTasks)
+            {
+                if (set.taskType == TaskTypes.DivertPower)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+        public static Console GetClosestDivertPowerConsole()
+        {
+            float dis = 10;
+            Console closest = null;
+            foreach (KeyValuePair<Console, ArrowBehaviour> pair in consoles)
+            {
+                float currentDis = Vector2.Distance(pair.key.transform.position, PlayerControl.LocalPlayer.transform.position);
+                if (dis > currentDis)
+                {
+                    dis = currentDis;
+                    closest = pair.key;
+                }
+            }
+            return closest;
+        }
         [HarmonyPatch(typeof(AcceptDivertPowerGame), "Start")]
         public class AcceptDivertPowerGamePatch
         {
             public static void Postfix(AcceptDivertPowerGame __instance)
             {
-                DivertPowerTask task = null;
-                foreach (SystemTypes type in tasks.Keys)
-                {
-                    task = Utils.GetTaskByTarget(type);
-                    if (task != null)
-                    {
-                        break;
-                    }
-                }
+                DivertPowerTask task = GetFirst();
                 if (task == null)
                 {
                     return;
                 }
-                __instance.Console = Utils.GetClosestDivertPowerConsole(__instance, task.TargetSystem);
+                __instance.Console = GetClosestDivertPowerConsole();
                 __instance.MyNormTask = task;
                 __instance.MyTask = __instance.MyNormTask;
                 __instance.Switch.GetComponent<ButtonBehavior>().OnClick.AddListener(new Action(delegate
                 {
-                    foreach ((Console console, ArrowBehaviour arrow) pair in tasks[task.TargetSystem])
+                    foreach (KeyValuePair<Console, ArrowBehaviour> pair in consoles)
                     {
-                        if (pair.console == __instance.Console)
+                        if (pair.key == __instance.Console)
                         {
-                            tasks[task.TargetSystem].Remove(pair);
-                            GameObject.Destroy(pair.arrow.gameObject);
+                            consoles.Remove(pair.key);
+                            GameObject.Destroy(pair.value.gameObject);
                         }
                     }
                 }));
@@ -59,13 +90,7 @@ namespace HardTasks.Skeld
                 }
                 else if (__instance.taskStep == 1)
                 {
-                    foreach ((Console console, ArrowBehaviour arrow) pair in tasks[__instance.TargetSystem])
-                    {
-                        if (console == pair.console)
-                        {
-                            __result = true;
-                        }
-                    }
+                    __result = consoles.ContainsKey(console);
                 }
                 return false;
             }
@@ -85,37 +110,17 @@ namespace HardTasks.Skeld
             public static void InitializePostfix(NormalPlayerTask __instance)
             {
                 DivertPowerTask task = __instance.TryCast<DivertPowerTask>();
-                if (task != null)
+                if (task != null && task.Owner == PlayerControl.LocalPlayer)
                 {
-                    task.arrowSuspended = true;
-                    task.Arrow.gameObject.SetActive(false);
-                    if (!tasks.Keys.Contains(task.TargetSystem))
+                    consoles.Clear();
+                    foreach (Console console in ShipStatus.Instance.AllConsoles)
                     {
-                        List<(Console, ArrowBehaviour)> list = new List<(Console, ArrowBehaviour)>();
-                        foreach (Console console in ShipStatus.Instance.AllConsoles)
+                        if (!console.TaskTypes.Contains(TaskTypes.DivertPower) && IsDivertPowerTaskConsole(console))
                         {
-                            if (!console.TaskTypes.Contains(TaskTypes.DivertPower) && Utils.IsDivertPowerTaskConsole(console))
-                            {
-                                ArrowBehaviour arrow = GameObject.Instantiate<ArrowBehaviour>(task.Arrow, task.Arrow.transform.parent);
-                                arrow.target = console.transform.position;
-                                arrow.gameObject.SetActive(false);
-                                list.Add((console, arrow));
-                            }
-                        }
-                        tasks.Add(task.TargetSystem, list);
-                    }
-                    else
-                    {
-                        tasks[task.TargetSystem].Clear();
-                        foreach (Console console in ShipStatus.Instance.AllConsoles)
-                        {
-                            if (!console.TaskTypes.Contains(TaskTypes.DivertPower) && Utils.IsDivertPowerTaskConsole(console))
-                            {
-                                ArrowBehaviour arrow = GameObject.Instantiate<ArrowBehaviour>(task.Arrow, task.Arrow.transform.parent);
-                                arrow.target = console.transform.position;
-                                arrow.gameObject.SetActive(false);
-                                tasks[task.TargetSystem].Add((console, arrow));
-                            }
+                            ArrowBehaviour arrow = GameObject.Instantiate<ArrowBehaviour>(task.Arrow, task.Arrow.transform.parent);
+                            arrow.target = console.transform.position;
+                            arrow.gameObject.SetActive(false);
+                            consoles.Add(console, arrow);
                         }
                     }
                 }
@@ -125,17 +130,17 @@ namespace HardTasks.Skeld
             public static bool NextStepPrefix(NormalPlayerTask __instance)
             {
                 DivertPowerTask task = __instance.TryCast<DivertPowerTask>();
-                if (task != null)
+                if (task != null && task.Owner == PlayerControl.LocalPlayer)
                 {
                     if (task.TaskStep == 0)
                     {
-                        foreach ((Console console, ArrowBehaviour arrow) pair in tasks[task.TargetSystem])
+                        foreach (KeyValuePair<Console, ArrowBehaviour> pair in consoles)
                         {
-                            pair.arrow.gameObject.SetActive(true);
+                            pair.value.gameObject.SetActive(true);
                         }
                         return true;
                     }
-                    return tasks[task.TargetSystem].Count == 0;
+                    return consoles.Count == 0;
                 }
                 return true;
             }

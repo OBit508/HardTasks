@@ -1,12 +1,12 @@
 ﻿using HarmonyLib;
-using ImpossibleTasksV3.CustomTask;
+using HardTasks.CustomTask;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ImpossibleTasksV3.Skeld
+namespace HardTasks.Skeld
 {
     [HarmonyPatch(typeof(UploadDataGame))]
     internal static class UploadTask
