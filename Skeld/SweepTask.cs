@@ -51,6 +51,7 @@ namespace HardTasks.Skeld
             HorizontalGauge gauge = GameObject.Instantiate<HorizontalGauge>(prefab.Gauges[0], parent, true);
             gauge.transform.localScale = new Vector3(0.35f, 0.6f, 0.6f);
             gauge.transform.localPosition = new Vector3(-0.49f, 1.81f, 0.2f);
+            gauge.transform.GetChild(1).GetComponent<SpriteRenderer>().color = color;
             original.Gauges = original.Gauges.Concat(new HorizontalGauge[] { gauge }).ToArray();
             original.Lights = original.Lights.Concat(new SpriteRenderer[] { GameObject.Instantiate<SpriteRenderer>(prefab.Lights[0], parent, true) }).ToArray();
             SpriteRenderer shadow = GameObject.Instantiate<SpriteRenderer>(prefab.Shadows[0], parent, true);

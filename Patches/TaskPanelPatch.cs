@@ -4,7 +4,7 @@ using HarmonyLib;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
+using Il2CppSystem.Text;
 using System.Threading.Tasks;
 
 namespace HardTasks.Patches
@@ -16,6 +16,7 @@ namespace HardTasks.Patches
         {
             try
             {
+                StringBuilder sb = new StringBuilder();
                 foreach (PlayerTask task in PlayerControl.LocalPlayer.myTasks)
                 {
                     DivertPowerTask divertPowerTask = task.TryCast<DivertPowerTask>();
@@ -49,19 +50,24 @@ namespace HardTasks.Patches
                         }
                         if (divertPowerTask.TaskStep == 0)
                         {
-                            str += "\n" + TranslationController.Instance.GetString(SystemTypes.Electrical) + ": Divert Power (0/" + (consoles + 1).ToString() + ")";
+                            sb.AppendLine(TranslationController.Instance.GetString(SystemTypes.Electrical) + ": Divert Power (0/" + (consoles + 1).ToString() + ")");
                         }
                         else if (divertPowerTask.TaskStep == 1)
                         {
-                            str += "\n<color=#FFFF00FF>" + TranslationController.Instance.GetString(mapName) + ": Accept Diverted Power (" + (1 + consoles - DivertPower.consoles.Count).ToString() + "/" + (consoles + 1).ToString() + ")</color>";
+                            sb.AppendLine("<color=#FFFF00FF>" + TranslationController.Instance.GetString(mapName) + ": Accept Diverted Power (" + (1 + consoles - DivertPower.consoles.Count).ToString() + "/" + (consoles + 1).ToString() + ")</color>");
                         }
                         else
                         {
-                            str += "\n<color=#00DD00FF>" + TranslationController.Instance.GetString(mapName) + ": Divert Power (" + (consoles + 1).ToString() + "/" + (consoles + 1).ToString() + ")</color>";
+                            sb.AppendLine("<color=#00DD00FF>" + TranslationController.Instance.GetString(mapName) + ": Divert Power (" + (consoles + 1).ToString() + "/" + (consoles + 1).ToString() + ")</color>");
                         }
                     }
+                    else
+                    {
+                        task.AppendTaskText(sb);
+                    }
                 }
-                __instance.taskText.text = str;
+                PlayerControl.LocalPlayer.Data.Role.AppendTaskHint(sb);
+                __instance.taskText.text = sb.ToString();
             }
             catch
             {

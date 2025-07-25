@@ -27,6 +27,7 @@
     <Compile Include="Skeld\DivertPowerTask.cs" />
     <Compile Include="Skeld\GarbageTask.cs" />
     <Compile Include="Skeld\LeafTask.cs" />
+    <Compile Include="Skeld\RefuelTask.cs" />
     <Compile Include="Skeld\SampleTask.cs" />
     <Compile Include="Skeld\ScanTask.cs" />
     <Compile Include="Skeld\ShieldTask.cs" />
@@ -40,6 +41,11 @@
     <Compile Include="System\Runtime\CompilerServices\RefSafetyRulesAttribute.cs" />
     <Compile Include="Patches\TaskPanelPatch.cs" />
     <Compile Include="Utils.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\Fuel\background.png" />
+    <EmbeddedResource Include="Resources\Fuel\pipe.png" />
+    <EmbeddedResource Include="Resources\Fuel\canister.png" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resources\Manifolds\8.png" />

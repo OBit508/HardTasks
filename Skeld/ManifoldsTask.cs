@@ -31,17 +31,6 @@ namespace HardTasks.Skeld
             __instance.transform.GetChild(1).localPosition = new Vector3(-3.88f, 1.392f, -5);
             __instance.transform.GetChild(1).localScale = new Vector3(0.95f, 0.95f, 0.95f);
             __instance.transform.localScale = new Vector3(0.7f, 0.7f, 0.7f);
-            Action reset = new Action(delegate
-            {
-                for (int i = 0; i < 200; i++)
-                {
-                    SpriteRenderer button1 = __instance.Buttons[new System.Random().Next(0, __instance.Buttons.Count - 1)];
-                    SpriteRenderer button2 = __instance.Buttons[new System.Random().Next(0, __instance.Buttons.Count - 1)];
-                    Vector3 vec = button1.transform.localPosition;
-                    button1.transform.localPosition = button2.transform.localPosition;
-                    button2.transform.localPosition = vec;
-                }
-            });
             foreach (SpriteRenderer rend in __instance.Buttons)
             {
                 GameObject.Destroy(rend.gameObject);
@@ -50,21 +39,27 @@ namespace HardTasks.Skeld
             __instance.ControllerSelectable.Clear();
             for (int i = 0; i <= 20; i++)
             {
-                CreateButton(__instance, reset);
+                CreateButton(__instance);
             }
-            reset();
+            for (int i = 0; i < 200; i++)
+            {
+                SpriteRenderer button1 = __instance.Buttons[new System.Random().Next(0, __instance.Buttons.Count - 1)];
+                SpriteRenderer button2 = __instance.Buttons[new System.Random().Next(0, __instance.Buttons.Count - 1)];
+                Vector3 vec = button1.transform.localPosition;
+                button1.transform.localPosition = button2.transform.localPosition;
+                button2.transform.localPosition = vec;
+            }
         }
-        public static void CreateButton(UnlockManifoldsMinigame minigame, Action reset)
+        public static void CreateButton(UnlockManifoldsMinigame minigame)
         {
             SpriteRenderer rend = GameObject.Instantiate<SpriteRenderer>(minigame.MyNormTask.GetMinigamePrefab().Cast<UnlockManifoldsMinigame>().Buttons[0], minigame.transform);
             int i = minigame.Buttons.Count;
-            rend.sprite = sprites[i];
+            rend.sprite = sprites[i - 21];
             PassiveButton button = rend.GetComponent<PassiveButton>();
             button.OnClick = new UnityEngine.UI.Button.ButtonClickedEvent();
             button.OnClick.AddListener(new Action(delegate
             {
                 minigame.HitButton(i);
-                reset();
             }));
             float num = -2.55f;
             float num2 = 0.77f;

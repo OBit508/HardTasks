@@ -18,11 +18,12 @@ namespace HardTasks.Skeld
             for (int i = 0; i<= 10; i++)
             {
                 __instance.SpawnDirt();
+                __instance.numberOfDirts++;
             }
         }
         [HarmonyPatch("CleanUp")]
         [HarmonyPrefix]
-        public static bool CleanUpPrefix([HarmonyArgument(0)] VentDirt ventDirt)
+        public static bool CleanUpPrefix(VentCleaningMinigame __instance, [HarmonyArgument(0)] VentDirt ventDirt)
         {
             SpriteRenderer rend = ventDirt.GetComponent<SpriteRenderer>();
             Color color = rend.color;

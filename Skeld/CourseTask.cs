@@ -43,15 +43,16 @@ namespace HardTasks.Skeld
                 }
             }
             timer += Time.deltaTime;
-            if (timer >= 0.5f)
+            if (timer >= 0.6f)
             {
                 Asteroid asteroid = GameObject.Instantiate<Asteroid>(Utils.GetMinigamePrefab(TaskTypes.ClearAsteroids).Cast<WeaponsMinigame>().asteroidPool.Prefab.Cast<Asteroid>(), __instance.transform);
                 SpriteRenderer renderer = asteroid.GetComponent<SpriteRenderer>();
+                renderer.color = new Color(0, 0.5f, 1, 1);
                 renderer.sprite = asteroid.AsteroidImages[new System.Random().Next(0, asteroid.AsteroidImages.Count - 1)];
                 renderer.maskInteraction = SpriteMaskInteraction.None;
                 renderer.transform.localScale = new Vector3(0.3f, 0.3f, 1);
                 renderer.transform.localPosition = new Vector3(UnityEngine.Random.RandomRange(-2f, 2f), 1.1f, -1);
-                renderer.gameObject.AddComponent<Rigidbody2D>().gravityScale = 0.1f;
+                renderer.gameObject.AddComponent<Rigidbody2D>().gravityScale = 0.07f;
                 GameObject.Destroy(asteroid);
                 Asteroids.Add(renderer.transform);
                 timer = 0;
