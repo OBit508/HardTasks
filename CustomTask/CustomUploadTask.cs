@@ -15,17 +15,22 @@ namespace HardTasks.CustomTask
         public List<GenericPopup> PopUps = new List<GenericPopup>();
         public bool doPercent;
         public int value;
-        public string[] strings = new string[] 
+        public string[] strings = new string[]
         {
             "ERROR",
             ":)",
             "Hi",
-            "Pop Up",
-            "This Upload is funny",
+            "Free minecraft\ndownload updated\n2025!!!!!",
+            "Brazil!!!",
             ":/",
             "Close me",
             "...",
-            "abcdefghijklmnopqrstuvwxyz"
+            "abcdefghijklmnopqrstuvwxyz",
+            "amogus",
+            "Hard",
+            "You are sus",
+            "SUS!!!",
+            "I think that\nyou are the impostor"
         };
 
         public void Create_Pop_Up()
