@@ -12,19 +12,26 @@ namespace HardTasks.Skeld
     internal class SimonSaysTask
     {
         public static List<Sprite> buttons;
+        public static List<Sprite> Buttons
+        {
+            get
+            {
+                if (buttons == null)
+                {
+                    buttons = new List<Sprite>();
+                    for (int i = 0; i <= 8; i++)
+                    {
+                        buttons.Add(Utils.LoadSprite("HardTasks.Resources.SimonSays." + i.ToString(), 180));
+                    }
+                }
+                return buttons;
+            }
+        }
         public static void Postfix(SimonSaysGame __instance)
         {
-            if (buttons == null)
-            {
-                buttons = new List<Sprite>();
-                for (int i = 0; i <= 8; i++)
-                {
-                    buttons.Add(Utils.LoadSprite("HardTasks.Resources.SimonSays." + i.ToString(), 180));
-                }
-            }
             for (int i = 0; i < __instance.Buttons.Count; i++)
             {
-                __instance.Buttons[i].sprite = buttons[i];
+                __instance.Buttons[i].sprite = Buttons[i];
             }
             for (int i = 0; i < 200; i++)
             {
