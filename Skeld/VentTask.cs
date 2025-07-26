@@ -29,7 +29,7 @@ namespace HardTasks.Skeld
             Color color = rend.color;
             color.a -= 0.2f;
             rend.color = color;
-            return rend.color.a <= 0;
+            return rend.color.a <= 0.2f;
         }
     }
 }

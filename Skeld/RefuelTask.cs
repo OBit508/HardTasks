@@ -18,6 +18,10 @@ namespace HardTasks.Skeld
         [HarmonyPostfix]
         public static void BeginPostfix(RefuelStage __instance)
         {
+            if (__instance.transform.parent.Find("BackgroundCloseButton") != null)
+            {
+                __instance.transform.parent.Find("BackgroundCloseButton").gameObject.SetActive(false);
+            }
             all.Clear();
             Transform background = __instance.transform.GetChild(1);
             Create(background, new Vector3(0, 0, 0), new Vector3(1, 1, 1));
@@ -31,10 +35,6 @@ namespace HardTasks.Skeld
         [HarmonyPrefix]
         public static bool FixedUpdatePrefix(RefuelStage __instance)
         {
-            if (__instance.multistageMinigameParent != null)
-            {
-                __instance.multistageMinigameParent.transform.GetChild(3).gameObject.SetActive(false);
-            }
             if (__instance.timer < 6)
             {
                 int activeCount = 0;
@@ -51,12 +51,22 @@ namespace HardTasks.Skeld
                 }
                 else if (__instance.timer - 0.1f > 0)
                 {
-                    __instance.timer -= 0.1f;
+                    __instance.timer -= 0.01f;
                 }
                 __instance.destGauge.value = __instance.timer / 6;
-                if (__instance.timer == 6)
+                if (__instance.timer >= 6)
                 {
-                    __instance.MyNormTask.NextStep();
+                    if (__instance.MyNormTask.Data[1] == 1 || __instance.MyNormTask.Data[1] == 3)
+                    {
+                        __instance.MyNormTask.NextStep();
+                    }
+                    __instance.MyNormTask.Data[1]++;
+                    __instance.MyNormTask.Arrow.gameObject.SetActive(false);
+                    if (__instance.MyNormTask.Data[1] != 4)
+                    {
+                        __instance.MyNormTask.Arrow.target = __instance.MyNormTask.Locations[0];
+                        __instance.MyNormTask.Arrow.gameObject.SetActive(true);
+                    }
                     __instance.StartCoroutine(__instance.CoStartClose());
                 }
             }
@@ -73,7 +83,10 @@ namespace HardTasks.Skeld
             background.GetChild(1).GetChild(0).GetComponent<ButtonBehavior>().OnClick = new UnityEngine.UI.Button.ButtonClickedEvent();
             background.GetChild(1).GetChild(0).GetComponent<ButtonBehavior>().OnClick.AddListener(new Action(delegate
             {
-                timer.Value = 2;
+                if (timer.Value <= 0)
+                {
+                    timer.Value = 2;
+                }
             }));
         }
     }

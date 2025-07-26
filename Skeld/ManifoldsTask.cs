@@ -54,7 +54,7 @@ namespace HardTasks.Skeld
         {
             SpriteRenderer rend = GameObject.Instantiate<SpriteRenderer>(minigame.MyNormTask.GetMinigamePrefab().Cast<UnlockManifoldsMinigame>().Buttons[0], minigame.transform);
             int i = minigame.Buttons.Count;
-            rend.sprite = sprites[i - 21];
+            rend.sprite = sprites[20 - i];
             PassiveButton button = rend.GetComponent<PassiveButton>();
             button.OnClick = new UnityEngine.UI.Button.ButtonClickedEvent();
             button.OnClick.AddListener(new Action(delegate

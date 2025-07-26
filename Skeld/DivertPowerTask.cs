@@ -96,9 +96,47 @@ namespace HardTasks.Skeld
             }
             [HarmonyPatch("AppendTaskText")]
             [HarmonyPrefix]
-            public static bool AppendTaskTextPrefix(DivertPowerTask __instance, [HarmonyArgument(0)] StringBuilder sb)
+            public static bool AppendTaskTextPrefix(DivertPowerTask __instance, [HarmonyArgument(0)] Il2CppSystem.Text.StringBuilder sb)
             {
                 __instance.Arrow.gameObject.SetActive(false);
+                ShipStatus ship = ShipStatus.Instance;
+                int consoles = 0;
+                StringNames mapName = StringNames.MapNameSkeld;
+                foreach (Console console in ship.AllConsoles)
+                {
+                    if (DivertPower.IsDivertPowerTaskConsole(console))
+                    {
+                        consoles++;
+                    }
+                }
+                if (ship.name == "MiraShip(Clone)")
+                {
+                    mapName = StringNames.MapNameMira;
+                }
+                else if (ship.name == "PolusShip(Clone)")
+                {
+                    mapName = StringNames.MapNamePolus;
+                }
+                else if (ship.name == "Airship(Clone)")
+                {
+                    mapName = StringNames.MapNameAirship;
+                }
+                else if (ship.name == "FungleShip(Clone)")
+                {
+                    mapName = StringNames.MapNameFungle;
+                }
+                if (__instance.TaskStep == 0)
+                {
+                    sb.AppendLine(TranslationController.Instance.GetString(SystemTypes.Electrical) + ": Divert Power (0/" + (consoles + 1).ToString() + ")");
+                }
+                else if (__instance.TaskStep == 1)
+                {
+                    sb.AppendLine("<color=#FFFF00FF>" + TranslationController.Instance.GetString(mapName) + ": Accept Diverted Power (" + (1 + consoles - DivertPower.consoles.Count).ToString() + "/" + (consoles + 1).ToString() + ")</color>");
+                }
+                else
+                {
+                    sb.AppendLine("<color=#00DD00FF>" + TranslationController.Instance.GetString(mapName) + ": Divert Power (" + (consoles + 1).ToString() + "/" + (consoles + 1).ToString() + ")</color>");
+                }
                 return false;
             }
         }
