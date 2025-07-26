@@ -20,7 +20,7 @@ namespace ImpossibleTasksV3
         public const string Owner = "rafael";
         public const string ModDescription = "";
         public const string ModId = "com." + Owner + "." + ModName;
-        public const string ModVersion = "1.0.0";
+        public const string ModVersion = "0.1.0";
         public Harmony Harmony { get; } = new Harmony(ModId);
 		public override void Load()
 		{
