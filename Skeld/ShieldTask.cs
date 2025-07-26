@@ -41,9 +41,9 @@ namespace HardTasks.Skeld
                     __instance.Shields[i].color = __instance.OffColor;
                 }
                 __instance.shields = 0;
-                timer = 1.7f;
+                timer = 2;
             }
-            Gauge.Value = timer / 1.7f;
+            Gauge.Value = timer / 2;
         }
     }
 }
