@@ -1,4 +1,5 @@
 ﻿using HarmonyLib;
+using ImpossibleTasksV3;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,7 +13,7 @@ namespace HardTasks.Patches
     {
         public static void Postfix(PingTracker __instance)
         {
-            __instance.text.text += "\nHardTasks 1.0.0\n<size=1.5>https://github.com/OBit508/HardTasks</size>";
+            __instance.text.text += "\nHardTasks " + HardTasksPlugin.ModVersion + "\n<size=1.5>https://github.com/OBit508/HardTasks</size>";
             __instance.text.horizontalAlignment = TMPro.HorizontalAlignmentOptions.Center;
         }
     }

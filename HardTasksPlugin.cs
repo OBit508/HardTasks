@@ -8,7 +8,12 @@ using Hazel;
 using Il2CppInterop.Runtime.Injection;
 using HardTasks.CustomTask;
 using InnerNet;
-
+using System.IO.Compression;
+using System.IO;
+using System.Net.Http;
+using System.Text;
+using System.Net.Http.Headers;
+using System.Collections.Generic;
 
 namespace ImpossibleTasksV3
 {
@@ -26,6 +31,6 @@ namespace ImpossibleTasksV3
 		{
 			ClassInjector.RegisterTypeInIl2Cpp<CustomUploadTask>();
             Harmony.PatchAll();
-		}
-	}
+        }
+    }
 }

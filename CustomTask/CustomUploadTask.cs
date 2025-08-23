@@ -12,9 +12,10 @@ namespace HardTasks.CustomTask
         public UploadDataGame Game;
         public float timer;
         public float timer2;
-        public List<GenericPopup> PopUps = new List<GenericPopup>();
+        
         public bool doPercent;
         public int value;
+        public List<GenericPopup> PopUps = new List<GenericPopup>();
         public string[] strings = new string[]
         {
             "ERROR",

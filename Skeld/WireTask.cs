@@ -12,16 +12,19 @@ namespace HardTasks.Skeld
     [HarmonyPatch(typeof(WireMinigame))]
     internal class WireTask
     {
-
+        public static int wiresCount = 14;
+        public static Sprite background = Utils.LoadSprite("HardTasks.Resources.WireTaskBackground", 100);
         [HarmonyPatch("Begin")]
-        [HarmonyPostfix]
-        public static void BeginPostfix(WireMinigame __instance)
+        [HarmonyPrefix]
+        public static void BeginPrefix(WireMinigame __instance)
         {
-            WireMinigame prefab = __instance.MyNormTask.GetMinigamePrefab().Cast<WireMinigame>();
-            WireMinigame.colors = new Color[] { Color.gray, Color.gray, Color.gray, Color.gray, Color.gray, Color.gray, Color.gray, Color.gray, Color.gray };
-            __instance.ActualWires = new sbyte[] { -1, -1, -1, -1, -1, -1, -1, -1, -1 };
-            __instance.Symbols = new Sprite[] { null, null, null, null, null, null, null, null, null };
-            __instance.ExpectedWires = new sbyte[] { 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+            WireMinigame prefab = Utils.GetMinigamePrefab(TaskTypes.FixWiring).Cast<WireMinigame>();
+            __instance.transform.GetChild(0).GetComponent<SpriteRenderer>().sprite = background;
+            WireMinigame.colors = new Color[wiresCount];
+            __instance.ActualWires = new sbyte[wiresCount];
+            __instance.Symbols = new Sprite[wiresCount];
+            __instance.ExpectedWires = new sbyte[wiresCount];
+            List<sbyte> ids = new List<sbyte>();
             for (int i = 2; i < __instance.transform.GetChildCount(); i++)
             {
                 __instance.transform.GetChild(i).gameObject.SetActive(false);
@@ -30,58 +33,41 @@ namespace HardTasks.Skeld
             __instance.LeftNodes = new Wire[] { };
             __instance.RightLights = new SpriteRenderer[] { };
             __instance.RightNodes = new WireNode[] { };
-            Create(__instance, prefab).localPosition = new Vector3(0, 0.5f, 0);
-            Create(__instance, prefab).localPosition = Vector3.zero;
-            Create(__instance, prefab).localPosition = new Vector3(0, -0.5f, 0);
-            Create(__instance, prefab).localPosition = new Vector3(0, -1, 0);
-            Create(__instance, prefab).localPosition = new Vector3(0, -1.5f, 0);
-            Create(__instance, prefab).localPosition = new Vector3(0, -2, 0);
-            Create(__instance, prefab).localPosition = new Vector3(0, -2.5f, 0);
-            Create(__instance, prefab).localPosition = new Vector3(0, -3, 0);
-            Create(__instance, prefab).localPosition = new Vector3(0, -3.5f, 0);
-            List<sbyte> ids = new List<sbyte>() { 0, 1, 2, 3, 4, 5, 6, 7, 8 };
-            for (int i = 0; i < 9; i++)
+            float num = 1.05f;
+            for (int i = 0; i < wiresCount; i++)
+            {
+                WireMinigame.colors[i] = Color.HSVToRGB((float)i / (float)wiresCount, 1f, 1f);
+                __instance.ActualWires[i] = -1;
+                num -= 0.35f;
+                Transform wire = Create(__instance, prefab, WireMinigame.colors[i]);
+                wire.localPosition = new Vector3(0, num, 0);
+                ids.Add((sbyte)i);
+            }
+            for (int i = 0; i < wiresCount; i++)
             {
                 sbyte id = ids[new System.Random().Next(0, ids.Count - 1)];
                 ids.Remove(id);
                 __instance.ExpectedWires[i] = (sbyte)id;
             }
         }
-        [HarmonyPatch("CheckRightSide")]
-        [HarmonyPrefix]
-        public static bool CheckRightSidePrefix(WireMinigame __instance, ref WireNode __result, Vector2 pos)
-        {
-            Collider2D amTouching = __instance.myController.amTouching;
-            int wireId = (int)amTouching.transform.parent.GetComponent<Wire>().WireId;
-            for (int i = 0; i < __instance.RightNodes.Length; i++)
-            {
-                WireNode wireNode = __instance.RightNodes[i];
-                if (wireNode.hitbox.OverlapPoint(pos) && __instance.ExpectedWires[wireId] == wireNode.WireId)
-                {
-                    __result = wireNode;
-                }
-            }
-            if (!__result)
-            {
-                __result = null;
-            }
-            return false;
-        }
-        public static Transform Create(WireMinigame original, WireMinigame prefab)
+        public static Transform Create(WireMinigame original, WireMinigame prefab, Color color)
         {
             Transform parent = new GameObject("Parent").transform;
             parent.SetParent(original.transform);
             original.LeftLights = original.LeftLights.Concat(new SpriteRenderer[] { GameObject.Instantiate<SpriteRenderer>(prefab.LeftLights[0], parent, true) }).ToArray();
             Wire wire = GameObject.Instantiate<Wire>(prefab.LeftNodes[0], parent, true);
             wire.ResetLine(Vector3.zero, true);
-            wire.SetColor(Color.gray, null);
+            wire.SetColor(color, null);
             wire.WireId = (sbyte)original.LeftNodes.Count;
+            wire.hitbox.Cast<CircleCollider2D>().radius = 1.5f / (float)wiresCount + 0.1f;
             original.LeftNodes = original.LeftNodes.Concat(new Wire[] { wire }).ToArray();
             original.RightLights = original.RightLights.Concat(new SpriteRenderer[] { GameObject.Instantiate<SpriteRenderer>(prefab.RightLights[0], parent, true) }).ToArray();
             WireNode node = GameObject.Instantiate<WireNode>(prefab.RightNodes[0], parent, true);
-            node.SetColor(Color.gray, null);
+            node.SetColor(color, null);
             node.WireId = (sbyte)original.RightNodes.Count;
+            node.hitbox.Cast<CircleCollider2D>().radius = 1.5f / (float)wiresCount + 0.1f;
             original.RightNodes = original.RightNodes.Concat(new WireNode[] { node }).ToArray();
+            int i = 0;
             return parent;
         }
     }

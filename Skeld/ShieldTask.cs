@@ -17,8 +17,17 @@ namespace HardTasks.Skeld
         [HarmonyPostfix]
         public static void BeginPostfix(ShieldMinigame __instance)
         {
+            HorizontalGauge gaugePrefab;
+            if (Utils.GetMinigamePrefab(TaskTypes.UploadData) != null)
+            {
+                gaugePrefab = Utils.GetMinigamePrefab(TaskTypes.UploadData).TryCast<UploadDataGame>().Gauge;
+            }
+            else
+            {
+                gaugePrefab = Utils.GetMinigamePrefab(TaskTypes.ProcessData).TryCast<ProcessDataMinigame>().Gauge;
+            }
             timer = 1.7f;
-            Gauge = GameObject.Instantiate<HorizontalGauge>(Utils.GetMinigamePrefab(TaskTypes.UploadData).Cast<UploadDataGame>().Gauge, __instance.transform);
+            Gauge = GameObject.Instantiate<HorizontalGauge>(gaugePrefab, __instance.transform);
             Gauge.transform.localPosition = new Vector3(0, -2.5f, 0);
             for (int i = 0; i < __instance.Shields.Count; i++)
             {

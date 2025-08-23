@@ -19,6 +19,12 @@
     <Compile Include="ChangeableValue.cs" />
     <Compile Include="CustomTask\CustomUploadTask.cs" />
     <Compile Include="HardTasksPlugin.cs" />
+    <Compile Include="Mira\CrystalTask.cs" />
+    <Compile Include="Mira\DiagnosticTask.cs" />
+    <Compile Include="Mira\EnterCodeTask.cs" />
+    <Compile Include="Mira\ProcessDataTask.cs" />
+    <Compile Include="Mira\SortTask.cs" />
+    <Compile Include="Mira\WaterPlantsTask.cs" />
     <Compile Include="Patches\PingTrackerPatch.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Skeld\CardTask.cs" />
@@ -39,6 +45,9 @@
     <Compile Include="Skeld\WireTask.cs" />
     <Compile Include="System\Runtime\CompilerServices\RefSafetyRulesAttribute.cs" />
     <Compile Include="Utils.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\WireTaskBackground.png" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resources\Fuel\background.png" />
