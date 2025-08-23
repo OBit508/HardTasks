@@ -47,6 +47,13 @@
     <Compile Include="Utils.cs" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Resources\Course\0.png" />
+    <EmbeddedResource Include="Resources\Course\1.png" />
+    <EmbeddedResource Include="Resources\Course\2.png" />
+    <EmbeddedResource Include="Resources\Course\3.png" />
+    <EmbeddedResource Include="Resources\Course\4.png" />
+  </ItemGroup>
+  <ItemGroup>
     <EmbeddedResource Include="Resources\Sweep\Background.png" />
   </ItemGroup>
   <ItemGroup>

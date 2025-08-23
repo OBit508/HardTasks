@@ -32,13 +32,7 @@ namespace HardTasks.Skeld
             for (int i = 0; i < 15; i++)
             {
                 Transform spinner = Create(__instance, Prefab, Color.HSVToRGB((float)i / (float)15, 1f, 1f));
-                float x = -2f;
-                float y = 0.5f;
-                int u = i % 5;
-                int o = i / 5;
-                float newX = x + 1.4f * u;
-                float newY = y - 1.4f * o;
-                spinner.localPosition = new Vector3(newX, newY);
+                spinner.localPosition = new Vector3(-2f + 1.4f * (i % 5), 0.5f - 1.4f * (i / 5));
             }
         }
         public static Transform Create(SweepMinigame original, SweepMinigame prefab, Color color)
