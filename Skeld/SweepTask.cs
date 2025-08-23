@@ -12,13 +12,14 @@ namespace HardTasks.Skeld
     [HarmonyPatch(typeof(SweepMinigame), "Begin")]
     internal class SweepTask
     {
-        public static Sprite background = Utils.LoadSprite("HardTasks.Resources.SweepTaskBackground", 100);
+        public static Sprite background = Utils.LoadSprite("HardTasks.Resources.Sweep.Background", 100);
+        public static Sprite lightOff = Utils.LoadSprite("HardTasks.Resources.Sweep.LightOff", 180);
         public static void Postfix(SweepMinigame __instance)
         {
-            __instance.SpinRate = 180;
+            SweepMinigame Prefab = __instance.MyNormTask.GetMinigamePrefab().Cast<SweepMinigame>();
+            __instance.SpinRate = 60;
             __instance.BackButton.transform.localPosition = new Vector3(-3.95f, 2.55f, -5);
             __instance.transform.GetChild(0).GetComponent<SpriteRenderer>().sprite = background;
-            SweepMinigame Prefab = __instance.MyNormTask.GetMinigamePrefab().Cast<SweepMinigame>();
             __instance.ControllerSelectable.Clear();
             __instance.Gauges = new HorizontalGauge[] { };
             __instance.Lights = new SpriteRenderer[] { };
@@ -28,12 +29,17 @@ namespace HardTasks.Skeld
             {
                 __instance.transform.GetChild(i).gameObject.SetActive(false);
             }
-            Create(__instance, Prefab, Color.yellow).localPosition = new Vector3(-1.75f, -0.2f, 0);
-            Create(__instance, Prefab, Palette.Blue).localPosition = new Vector3(0.75f, -0.2f, 0);
-            Create(__instance, Prefab, Color.green).localPosition = new Vector3(3.25f, -0.2f, 0);
-            Create(__instance, Prefab, Palette.Purple).localPosition = new Vector3(-1.75f, -2.06f, 0);
-            Create(__instance, Prefab, Palette.ImpostorRed).localPosition = new Vector3(0.75f, -2.06f, 0);
-            Create(__instance, Prefab, Palette.Orange).localPosition = new Vector3(3.25f, -2.06f, 0);
+            for (int i = 0; i < 15; i++)
+            {
+                Transform spinner = Create(__instance, Prefab, Color.HSVToRGB((float)i / (float)15, 1f, 1f));
+                float x = -2f;
+                float y = 0.5f;
+                int u = i % 5;
+                int o = i / 5;
+                float newX = x + 1.4f * u;
+                float newY = y - 1.4f * o;
+                spinner.localPosition = new Vector3(newX, newY);
+            }
         }
         public static Transform Create(SweepMinigame original, SweepMinigame prefab, Color color)
         {
@@ -53,14 +59,19 @@ namespace HardTasks.Skeld
             gauge.transform.localPosition = new Vector3(-0.49f, 1.81f, 0.2f);
             gauge.transform.GetChild(1).GetComponent<SpriteRenderer>().color = color;
             original.Gauges = original.Gauges.Concat(new HorizontalGauge[] { gauge }).ToArray();
-            original.Lights = original.Lights.Concat(new SpriteRenderer[] { GameObject.Instantiate<SpriteRenderer>(prefab.Lights[0], parent, true) }).ToArray();
+            SpriteRenderer light = GameObject.Instantiate<SpriteRenderer>(prefab.Lights[0], parent, true);
+            SpriteRenderer offLight = GameObject.Instantiate<SpriteRenderer>(light, parent, true);
+            offLight.sprite = lightOff;
+            offLight.enabled = true;
+            offLight.transform.localPosition = new Vector3(light.transform.localPosition.x, light.transform.localPosition.y, light.transform.localPosition.z + 0.1f);
+            original.Lights = original.Lights.Concat(new SpriteRenderer[] { light }).ToArray();
             SpriteRenderer shadow = GameObject.Instantiate<SpriteRenderer>(prefab.Shadows[0], parent, true);
             shadow.color = new Color(color.r * 0.5f, color.g * 0.5f, color.b * 0.5f, 1);
             original.Shadows = original.Shadows.Concat(new SpriteRenderer[] { shadow }).ToArray();
             SpriteRenderer spinner = GameObject.Instantiate<SpriteRenderer>(prefab.Spinners[0], parent, true);
             spinner.color = color;
             original.Spinners = original.Spinners.Concat(new SpriteRenderer[] { spinner }).ToArray();
-            parent.transform.localScale = new Vector3(0.8f, 0.8f, 0.8f);
+            parent.transform.localScale = new Vector3(0.7f, 0.7f, 0.7f);
             return parent;
         }
     }

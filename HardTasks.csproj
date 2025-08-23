@@ -47,6 +47,12 @@
     <Compile Include="Utils.cs" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Resources\Sweep\Background.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\Sweep\LightOff.png" />
+  </ItemGroup>
+  <ItemGroup>
     <EmbeddedResource Include="Resources\WireTaskBackground.png" />
   </ItemGroup>
   <ItemGroup>
@@ -83,9 +89,6 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resources\LeafButton.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Resources\SweepTaskBackground.png" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="0Harmony">

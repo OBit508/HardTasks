@@ -56,16 +56,23 @@ namespace HardTasks.Skeld
                 __instance.destGauge.value = __instance.timer / 6;
                 if (__instance.timer >= 6)
                 {
-                    if (__instance.MyNormTask.Data[1] == 1 || __instance.MyNormTask.Data[1] == 3)
+                    if (__instance.MyNormTask.MaxStep == 2)
+                    {
+                        if (__instance.MyNormTask.Data[1] == 1 || __instance.MyNormTask.Data[1] == 3)
+                        {
+                            __instance.MyNormTask.NextStep();
+                        }
+                        __instance.MyNormTask.Data[1]++;
+                        __instance.MyNormTask.Arrow.gameObject.SetActive(false);
+                        if (__instance.MyNormTask.Data[1] != 4)
+                        {
+                            __instance.MyNormTask.Arrow.target = __instance.MyNormTask.Locations[0];
+                            __instance.MyNormTask.Arrow.gameObject.SetActive(true);
+                        }
+                    }
+                    else
                     {
                         __instance.MyNormTask.NextStep();
-                    }
-                    __instance.MyNormTask.Data[1]++;
-                    __instance.MyNormTask.Arrow.gameObject.SetActive(false);
-                    if (__instance.MyNormTask.Data[1] != 4)
-                    {
-                        __instance.MyNormTask.Arrow.target = __instance.MyNormTask.Locations[0];
-                        __instance.MyNormTask.Arrow.gameObject.SetActive(true);
                     }
                     __instance.StartCoroutine(__instance.CoStartClose());
                 }
