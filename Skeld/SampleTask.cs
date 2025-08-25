@@ -11,34 +11,28 @@ namespace HardTasks.Skeld
     [HarmonyPatch(typeof(SampleMinigame))]
     internal class SampleTask
     {
-        public static List<SpriteRenderer> liquid = new List<SpriteRenderer>();
-        [HarmonyPatch("Begin")]
-        [HarmonyPostfix]
-        public static void BeginPostfix(SampleMinigame __instance)
-        {
-            liquid.Clear();
-        }
+        public static List<int> Ids = new List<int>();
         [HarmonyPatch("Update")]
-        [HarmonyPostfix]
-        public static void UpdatePostfix(SampleMinigame __instance)
+        public static void Postfix(SampleMinigame __instance)
         {
-            if (__instance.MyNormTask.TimerStarted == NormalPlayerTask.TimerState.Finished && liquid.Count <= 0)
+            __instance.TimePerStep = 30;
+            for (int i = 0; i < __instance.Tubes.Count; i++)
             {
-                __instance.AnomalyId = new System.Random().Next(0, 4);
-                liquid = __instance.Tubes.ToList();
-                liquid.Remove(liquid[__instance.AnomalyId]);
-                liquid.Remove(liquid[new System.Random().Next(0, liquid.Count - 1)]);
-                liquid.Remove(liquid[new System.Random().Next(0, liquid.Count - 1)]);
-                foreach (SpriteRenderer rend in __instance.Tubes)
-                {
-                    if (liquid.Contains(rend))
-                    {
-                        rend.color = Color.blue;
-                        return;
-                    }
-                    rend.color = Color.red;
-                }
+                __instance.Tubes[i].color = Ids.Contains(i) ? Color.red : Color.blue;
             }
+        }
+        [HarmonyPatch("AnomalyId", MethodType.Setter)]
+        public static bool Prefix(SampleMinigame __instance, ref int __value)
+        {
+            Ids = new List<int>() { 0, 1, 2, 3, 4 };
+            Ids.Remove(__value);
+            for (int i = 0; i < 2; i++)
+            {
+                int id = Ids[new System.Random().Next(0, Ids.Count - 1)];
+                Ids.Remove(id);
+            }
+            __instance.MyNormTask.Data[1] = (byte)__value;
+            return false;
         }
     }
 }

@@ -63,11 +63,6 @@
     <EmbeddedResource Include="Resources\WireTaskBackground.png" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Resources\Fuel\background.png" />
-    <EmbeddedResource Include="Resources\Fuel\pipe.png" />
-    <EmbeddedResource Include="Resources\Fuel\canister.png" />
-  </ItemGroup>
-  <ItemGroup>
     <EmbeddedResource Include="Resources\Manifolds\8.png" />
     <EmbeddedResource Include="Resources\Manifolds\9.png" />
     <EmbeddedResource Include="Resources\Manifolds\10.png" />
