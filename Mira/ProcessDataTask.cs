@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
+using static Il2CppSystem.Net.WebClient;
 
 namespace HardTasks.Mira
 {
@@ -61,7 +62,16 @@ namespace HardTasks.Mira
         {
             __instance.StartButton.enabled = false;
             __instance.StartCoroutine(CoDoAnimation(__instance));
+            __instance.StartCoroutine(CoDoAnimation(__instance));
             return false;
+        }
+        public static System.Collections.IEnumerator CoStartPopUpLoop(ProcessDataMinigame processData)
+        {
+            while (true)
+            {
+                yield return new WaitForSeconds(1);
+                Create_Pop_Up(processData.transform);
+            }
         }
         public static System.Collections.IEnumerator CoDoAnimation(ProcessDataMinigame processData)
         {
